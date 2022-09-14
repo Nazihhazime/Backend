@@ -1,11 +1,8 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const foods = require("./routes/foods");
 const categories = require("./routes/categories");
 const logger = require("./middleware/logger");
-const mongoose = require("mongoose");
-const { number } = require("joi");
-const { appendFile } = require("fs");
-const { get } = require("http");
 
 const app = express();
 
@@ -29,7 +26,6 @@ async function createFood(food) {
 }
 
 async function getFoods() {
-  const foods = await Food.find();
   console.log(foods);
 }
 

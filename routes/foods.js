@@ -1,20 +1,15 @@
 const joi = require("joi");
 const express = require("express");
-const { Food } = require("./modules/food");
+const { Food } = require("../models/food");
 const router = express.Router();
 
-const foods = [
-  { _id: "1", name: "Apple", category: "Fruit" },
-  { _id: "2", name: "Chips", category: "Snacks" },
-  { _id: "3", name: "Salad", category: "Vegetables" },
-];
-
-router.get("", (req, res) => {
+router.get("", async (req, res) => {
+  const foods = await Food.find();
   return res.send(foods);
 });
 
-router.get("/:id", (req, res) => {
-  const food = foods.find((f) => f._id === req.params.id);
+router.get("/:id", async (req, res) => {
+  const food = await Food.findById(req.params.id);
 
   if (!food)
     return res.status(404).send("The food with the given id was not found");
@@ -22,20 +17,20 @@ router.get("/:id", (req, res) => {
   return res.send(food);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { error } = validateFood(req.body);
 
   if (error) return res.status(404).send(error.message);
 
-  const food = {
-    id: "4",
-    name: req.body.name,
-    category: req.body.category,
-  };
+  const newFood = new Food(req.body);
 
-  foods.push(food);
+  try {
+    await newFood.save();
+  } catch (error) {
+    console.log(error);
+  }
 
-  return res.send(foods);
+  return res.send(newFood);
 });
 
 router.put("/:id", (req, res) => {
@@ -70,6 +65,8 @@ function validateFood(food) {
   const schema = joi.object({
     name: joi.string().required(),
     category: joi.string().required(),
+    price: joi.number().required(),
+    numberInStock: joi.number().required(),
   });
   return schema.validate(food);
 }

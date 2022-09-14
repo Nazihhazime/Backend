@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const foodSchema = mongoose.Schema({
   name: String,
   category: String,
