@@ -15,39 +15,6 @@ mongoose
   .then(() => console.log("connect to MongoDB"))
   .catch((error) => console.log("could not conecct...", error));
 
-async function createFood(food) {
-  const newFood = new Food(food);
-
-  try {
-    await newFood.save();
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getFoods() {
-  console.log(foods);
-}
-
-async function getOneFood(id) {
-  const foods = await Food.findById(id);
-  console.log(foods);
-}
-
-async function updateFood(id) {
-  await Food.findByIdAndUpdate(id, {
-    name: "banan",
-    category: "Fruit",
-    numberInStock: 3,
-    price: 5,
-  });
-}
-
-async function deleteOneFood(id) {
-  await Food.findByIdAndDelete(id);
-  console.log(foods);
-}
-
 app.listen(8000, () => {
   console.log("listening on port 8000...");
 });
