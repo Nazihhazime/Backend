@@ -18,15 +18,6 @@ mongoose
   .then(() => console.log("connect to MongoDB"))
   .catch((error) => console.log("could not conecct...", error));
 
-const foodSchema = mongoose.Schema({
-  name: String,
-  category: String,
-  numberInStock: Number,
-  price: Number,
-});
-
-const Food = mongoose.model("food", foodSchema);
-
 async function createFood(food) {
   const newFood = new Food(food);
 

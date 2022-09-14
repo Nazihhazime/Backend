@@ -1,5 +1,6 @@
 const joi = require("joi");
 const express = require("express");
+const { Food } = require("./modules/food");
 const router = express.Router();
 
 const foods = [
