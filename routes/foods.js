@@ -1,6 +1,7 @@
 const joi = require("joi");
 const express = require("express");
 const { Food } = require("../models/food");
+const { Category } = require("../models/food");
 const router = express.Router();
 
 router.get("", async (req, res) => {
@@ -22,7 +23,19 @@ router.post("/", async (req, res) => {
 
   if (error) return res.status(404).send(error.message);
 
-  const newFood = new Food(req.body);
+  existingCategory = await Category.findOne({ name: req.body.name });
+
+  let newCategory = new Category({ name: req.body.category });
+
+  if (!existingCategory) {
+    newCategory = await newCategory.save();
+  }
+
+  const newFood = new Food({
+    ...req.body,
+    category: existingCategory?._id || newCategory._id,
+    categoryName: newCategory.name,
+  });
 
   try {
     await newFood.save();
