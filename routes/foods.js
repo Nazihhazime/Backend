@@ -23,13 +23,16 @@ router.post("/", async (req, res) => {
 
   if (error) return res.status(404).send(error.message);
 
-  existingCategory = await Category.findOne({ name: req.body.name });
+  existingCategory = await Category.findOne({ name: req.body.category });
 
   let newCategory = new Category({ name: req.body.category });
 
-  if (!existingCategory) {
+  // if-sats för att samma kategori inte ska sparas mer än en gång i db
+  if (!existingCategory?.name) {
+    console.log("Fuck icke fungerande systemet");
     newCategory = await newCategory.save();
   }
+  console.log("Fuck you");
 
   const newFood = new Food({
     ...req.body,
