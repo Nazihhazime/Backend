@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 
   let newCategory = new Category({ name: req.body.category });
 
-  // if-sats för att samma kategori inte ska sparas mer än en gång i db
+  // if-sats för att samma category inte ska sparas mer än en gång i db
   if (!existingCategory?.name) {
     newCategory = await newCategory.save();
   }
