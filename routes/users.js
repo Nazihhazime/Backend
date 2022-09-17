@@ -15,7 +15,9 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   user.save();
 
-  return res.status(201).send(user);
+  const { password, ...userWithoutPassword } = user.toObject();
+
+  return res.status(201).send({ userWithoutPassword });
 });
 
 module.exports = router;
