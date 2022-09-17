@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 
-const categorySchema = mongoose.Schema({
-  name: { type: String, required: true },
-});
-
 const foodSchema = mongoose.Schema({
   name: String,
   categoryName: String,
@@ -17,7 +13,5 @@ const foodSchema = mongoose.Schema({
 });
 
 const Food = mongoose.model("food", foodSchema);
-const Category = mongoose.model("Category", categorySchema);
 
 module.exports.Food = Food;
-module.exports.Category = Category;

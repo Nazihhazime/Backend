@@ -1,6 +1,5 @@
-const joi = require("joi");
 const express = require("express");
-const { Category } = require("../models/food");
+const { Category } = require("../models/category");
 const router = express.Router();
 
 router.get("", async (req, res) => {
@@ -16,12 +15,5 @@ router.get("/:id", async (req, res) => {
 
   return res.send(category);
 });
-
-function validateCategory(category) {
-  const schema = joi.object({
-    name: joi.string().required(),
-  });
-  return schema.validate(category);
-}
 
 module.exports = router;
