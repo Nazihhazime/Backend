@@ -29,10 +29,8 @@ router.post("/", async (req, res) => {
 
   // if-sats för att samma kategori inte ska sparas mer än en gång i db
   if (!existingCategory?.name) {
-    console.log("Fuck icke fungerande systemet");
     newCategory = await newCategory.save();
   }
-  console.log("Fuck you");
 
   const newFood = new Food({
     ...req.body,
