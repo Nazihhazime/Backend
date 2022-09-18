@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const jwt = require("jsonwebtoken");
 const { mongoose } = require("mongoose");
 require("mongoose-type-email");
 
