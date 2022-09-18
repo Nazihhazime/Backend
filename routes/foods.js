@@ -1,8 +1,17 @@
 const joi = require("joi");
 const express = require("express");
 const { Food } = require("../models/Food");
+const auth = require("../middleware/auth");
 const { Category } = require("../models/Category");
+const User = require("../models/User");
 const router = express.Router();
+
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) return res.status(404).send("User not found");
+
+  return res.send(user);
+});
 
 router.get("", async (req, res) => {
   const foods = await Food.find();
