@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const foods = require("./routes/foods");
 const categories = require("./routes/categories");
+const auth = require("./routes/auth");
 const users = require("./routes/users");
 const logger = require("./middleware/logger");
 
@@ -12,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(logger);
 app.use("/api/foods", foods);
-app.use("/api/categories", categories);
 app.use("/api/users", users);
+app.use("/api/auth", auth);
 mongoose
   .connect("mongodb://localhost/myown-intensive-foods")
   .then(() => console.log("connect to MongoDB"))
