@@ -1,4 +1,3 @@
-require("express-async-errors");
 const dotenv = require("dotenv");
 
 function initConfig() {

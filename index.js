@@ -1,5 +1,5 @@
 const express = require("express");
-const startup = require("startup");
+const startup = require("./startup");
 const app = express();
 
 startup(app);

@@ -29,6 +29,7 @@ router.get("/:id", [auth, admin], async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  throw new Error("habibi");
   const { error } = validateFood(req.body);
 
   if (error) return res.status(404).send(error.message);
