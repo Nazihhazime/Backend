@@ -29,7 +29,7 @@ router.get("/:id", [auth, admin], async (req, res) => {
   return res.send(food);
 });
 
-router.post("/", [auth, admin], async (req, res) => {
+router.post("/", async (req, res) => {
   const { error } = validateFood(req.body);
 
   if (error) return res.status(404).send(error.message);
@@ -49,11 +49,7 @@ router.post("/", [auth, admin], async (req, res) => {
     categoryName: newCategory.name,
   });
 
-  try {
-    await newFood.save();
-  } catch (error) {
-    console.log(error);
-  }
+  await newFood.save();
 
   return res.send(newFood);
 });

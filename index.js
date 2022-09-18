@@ -1,24 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+const initRoutes = require("./startup/routes");
 const dotenv = require("dotenv");
-const foods = require("./routes/foods");
-const categories = require("./routes/categories");
-const auth = require("./routes/auth");
-const users = require("./routes/users");
-const { use } = require("./routes/users");
-const error = require("./middleware/error");
 
 const app = express();
 
 dotenv.config();
 
-app.use(cors());
-app.use(express.json());
-app.use("/api/foods", foods);
-app.use("/api/users", users);
-app.use("/api/auth", auth);
-app.use(error);
+initRoutes(app);
 
 mongoose
   .connect("mongodb://localhost/myown-intensive-foods")
