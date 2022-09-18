@@ -1,13 +1,11 @@
 const express = require("express");
-
 const initRoutes = require("./startup/routes");
 const initDb = require("./startup/routes");
-const dotenv = require("dotenv");
+const initConfig = require("./startup/routes");
 
 const app = express();
 
-dotenv.config();
-
+initConfig();
 initRoutes(app);
 initDb();
 
