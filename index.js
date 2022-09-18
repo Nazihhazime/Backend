@@ -14,7 +14,6 @@ dotenv.config();
 
 app.use(cors());
 app.use(express.json());
-app.use(logger);
 app.use("/api/foods", foods);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
