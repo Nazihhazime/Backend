@@ -1,3 +1,4 @@
+require("express-async-errors");
 const joi = require("joi");
 const express = require("express");
 const { Food } = require("../models/Food");
