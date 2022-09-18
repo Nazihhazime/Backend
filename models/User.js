@@ -8,6 +8,13 @@ const userSchema = mongoose.Schema({
   password: { type: String, minlength: 5, required: true },
 });
 
+userSchema.methods.generateAuthToken = function () {
+  return jwt.sign(
+    { _id: this._id, name: this.name, email: this.email },
+    process.env.JWT_SECRET
+  );
+};
+
 const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
