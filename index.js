@@ -7,6 +7,7 @@ const categories = require("./routes/categories");
 const auth = require("./routes/auth");
 const users = require("./routes/users");
 const { use } = require("./routes/users");
+const error = require("./middleware/error");
 
 const app = express();
 
