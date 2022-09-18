@@ -1,14 +1,20 @@
 const express = require("express");
 const { Joi } = require("joi");
+const bcrypt = require("bcrypt");
 const { User } = require("../models/User");
 const router = express.Router();
 
-router.post("/", async (req, ress) => {
+router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.message);
 
-  const existingUser = await User.findOne({ email: req.body.email });
-  if (!existingUser) return res.status(400).send("Invalid email or Password");
+  const user = await User.findOne({ email: req.body.email });
+  if (!existingUser) return res.status(400).send("Invalid email or password");
+
+  const isValid = await bcrypt.compare(req.body.password, user.password);
+  if (isValid) return res.status(400).send("Invalid email or password");
+
+  return res.send(true);
 });
 
 function validate(user) {
@@ -20,4 +26,4 @@ function validate(user) {
   return schema.validte(user);
 }
 
-modeule.exports = router;
+module.exports = router;
