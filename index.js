@@ -6,7 +6,6 @@ const foods = require("./routes/foods");
 const categories = require("./routes/categories");
 const auth = require("./routes/auth");
 const users = require("./routes/users");
-const logger = require("./middleware/logger");
 
 const app = express();
 
