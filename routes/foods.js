@@ -2,23 +2,24 @@ const joi = require("joi");
 const express = require("express");
 const { Food } = require("../models/Food");
 const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 const { Category } = require("../models/Category");
 const User = require("../models/User");
 const router = express.Router();
 
-router.get("/me", auth, async (req, res) => {
+router.get("/me", async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
   if (!user) return res.status(404).send("User not found");
 
   return res.send(user);
 });
 
-router.get("", async (req, res) => {
+router.get("/", async (req, res) => {
   const foods = await Food.find();
   return res.send(foods);
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", [auth, admin], async (req, res) => {
   const food = await Food.findById(req.params.id);
 
   if (!food)
@@ -27,7 +28,7 @@ router.get("/:id", async (req, res) => {
   return res.send(food);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", [auth, admin], async (req, res) => {
   const { error } = validateFood(req.body);
 
   if (error) return res.status(404).send(error.message);
@@ -56,7 +57,7 @@ router.post("/", async (req, res) => {
   return res.send(newFood);
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", [auth, admin], async (req, res) => {
   const { error } = validateFood(req.body);
 
   if (error) return res.status(404).send(error.message);
@@ -71,7 +72,7 @@ router.put("/:id", async (req, res) => {
   return res.send(food);
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
   const food = await Food.findByIdAndDelete(req.params.id);
 
   if (!food)
