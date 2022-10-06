@@ -12,6 +12,14 @@ const foodSchema = mongoose.Schema({
   price: Number,
 });
 
+// const foodSchema = mongoose.Schema({
+//   name: String,
+//   categoryName: String,
+//   category: categorySchema,
+//   numberInStock: Number,
+//   price: Number,
+// });
+
 const Food = mongoose.model("food", foodSchema);
 
 module.exports.Food = Food;

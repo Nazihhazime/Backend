@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 
   return res
     .status(201)
-    .header("x-auth-token", token)
+    .headers("x-auth-token", token)
     .send({ userWithoutPassword });
 });
 

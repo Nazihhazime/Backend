@@ -29,24 +29,20 @@ router.get("/:id", [auth, admin], async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  throw new Error("habibi");
   const { error } = validateFood(req.body);
 
   if (error) return res.status(404).send(error.message);
 
-  existingCategory = await Category.findOne({ name: req.body.category });
-
-  let newCategory = new Category({ name: req.body.category });
+  const category = await Category.findOne({ name: req.body.category });
 
   // if-sats för att samma category inte ska sparas mer än en gång i db
-  if (!existingCategory?.name) {
-    newCategory = await newCategory.save();
+  if (!category) {
+    res.status(404).send("The category witht he given id was not found");
   }
 
   const newFood = new Food({
     ...req.body,
-    category: existingCategory?._id || newCategory._id,
-    categoryName: newCategory.name,
+    category: category._id,
   });
 
   await newFood.save();
